@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	version="3.1">
+	<display-name>servlet-reverse-proxy</display-name>
+	<servlet>
+		<servlet-name>proxy</servlet-name>
+		<servlet-class>com.bimwinner.geobim.web.servlets.ReverseProxyServlet</servlet-class>
+		<init-param>
+			<param-name>proxyPass</param-name>
+			<param-value>${scheme}://t1.tianditu.com/img_c/</param-value>
+		</init-param>
+		<init-param>
+			<description>These request headers won't be passed directly, but may be modified and passed</description>
+			<param-name>overrideRequestHeaderNames</param-name>
+			<param-value>Host,Cookie,Referer</param-value>
+		</init-param>
+		<init-param>
+			<description>These response headers won't be passed directly, but may be modified and passed</description>
+			<param-name>overrideResponseHeaderNames</param-name>
+			<param-value>Connection,X-Frame-Options,X-XSS-Protection</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>proxy</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+</web-app>
